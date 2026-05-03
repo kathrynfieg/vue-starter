@@ -1,5 +1,8 @@
-import { computed, ref } from 'vue'
+import { useLocalStorage } from '@vueuse/core'
+import { computed } from 'vue'
 import type { Task, TaskStatus } from '@/types'
+
+const TASKS_STORAGE_KEY = 'vue-starter:task-board'
 
 /** Payload key for HTML5 drag-and-drop (use `text/plain` for broad browser support) */
 export const TASK_DRAG_MIME = 'text/plain'
@@ -16,7 +19,7 @@ export const BOARD_COLUMNS: BoardColumn[] = [
 ]
 
 export function useTaskBoard() {
-  const tasks = ref<Task[]>([])
+  const tasks = useLocalStorage<Task[]>(TASKS_STORAGE_KEY, [])
 
   const columns = computed(() =>
     BOARD_COLUMNS.map((col) => ({
