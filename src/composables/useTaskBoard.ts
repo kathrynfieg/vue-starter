@@ -1,6 +1,9 @@
 import { computed, ref } from 'vue'
 import type { Task, TaskStatus } from '@/types'
 
+/** Payload key for HTML5 drag-and-drop (use `text/plain` for broad browser support) */
+export const TASK_DRAG_MIME = 'text/plain'
+
 interface BoardColumn {
   status: TaskStatus
   title: string
@@ -35,5 +38,14 @@ export function useTaskBoard() {
     return task
   }
 
-  return { tasks, columns, addTask }
+  function moveTask(taskId: string, newStatus: TaskStatus) {
+    const task = tasks.value.find((task) => task.id === taskId)
+    if (!task || task.status === newStatus) return
+
+    tasks.value = tasks.value.map((task) =>
+      task.id === taskId ? { ...task, status: newStatus } : task,
+    )
+  }
+
+  return { tasks, columns, addTask, moveTask }
 }

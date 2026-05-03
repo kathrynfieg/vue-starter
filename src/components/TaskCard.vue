@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import { TASK_DRAG_MIME } from '@/composables/useTaskBoard'
 import type { Task, TaskStatus } from '@/types'
 
-defineProps<{
+const props = defineProps<{
   task: Task
+}>()
+
+const emit = defineEmits<{
+  dropped: [draggedTaskId: string]
 }>()
 
 const taskStatusTitles: Record<TaskStatus, string> = {
@@ -10,10 +15,30 @@ const taskStatusTitles: Record<TaskStatus, string> = {
   in_progress: 'In Progress',
   done: 'Done',
 }
+
+function onDragStart(e: DragEvent) {
+  const dt = e.dataTransfer
+  if (!dt) return
+  dt.setData(TASK_DRAG_MIME, props.task.id)
+  dt.effectAllowed = 'move'
+}
+
+function onDrop(e: DragEvent) {
+  const id = e.dataTransfer?.getData(TASK_DRAG_MIME)
+  if (!id) return
+  emit('dropped', id)
+  e.stopPropagation()
+}
 </script>
 
 <template>
-  <article class="rounded-lg border border-neutral-200 bg-white p-3 shadow-sm ring-neutral-900/5">
+  <article
+    draggable="true"
+    class="cursor-grab rounded-lg border border-neutral-200 bg-white p-3 shadow-sm ring-neutral-900/5 active:cursor-grabbing"
+    @dragstart="onDragStart"
+    @dragover.prevent
+    @drop.prevent="onDrop"
+  >
     <h3 class="font-semibold text-neutral-900">{{ task.title }}</h3>
     <p v-if="task.description" class="mt-1 line-clamp-2 text-sm text-neutral-600">
       {{ task.description }}

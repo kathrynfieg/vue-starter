@@ -16,11 +16,18 @@ nice to have:
 -->
 
 <script setup lang="ts">
-import TaskCard from './components/TaskCard.vue'
-import { useTaskBoard } from './composables/useTaskBoard'
+import { onMounted, onUnmounted, ref } from 'vue'
+import { TaskCard } from '@/components'
+import { TASK_DRAG_MIME, useTaskBoard } from '@/composables'
 import type { TaskStatus } from '@/types'
 
-const { tasks, columns, addTask } = useTaskBoard()
+const { tasks, columns, addTask, moveTask } = useTaskBoard()
+
+const dropHighlight = ref<TaskStatus | null>(null)
+
+function clearDropHighlight() {
+  dropHighlight.value = null
+}
 
 function handleAddTask(status: TaskStatus) {
   addTask({
@@ -29,6 +36,27 @@ function handleAddTask(status: TaskStatus) {
     status,
   })
 }
+
+function handleTaskDropped(draggedTaskId: string, columnStatus: TaskStatus) {
+  moveTask(draggedTaskId, columnStatus)
+}
+
+function handleColumnDrop(e: DragEvent, columnStatus: TaskStatus) {
+  const id = e.dataTransfer?.getData(TASK_DRAG_MIME)
+  if (!id) return
+  moveTask(id, columnStatus)
+}
+
+function setDropHighlight(status: TaskStatus) {
+  dropHighlight.value = status
+}
+
+onMounted(() => {
+  window.addEventListener('dragend', clearDropHighlight)
+})
+onUnmounted(() => {
+  window.removeEventListener('dragend', clearDropHighlight)
+})
 </script>
 
 <template>
@@ -46,7 +74,12 @@ function handleAddTask(status: TaskStatus) {
       <section
         v-for="col in columns"
         :key="col.status"
-        class="flex min-h-48 flex-col rounded-xl border border-neutral-200 bg-neutral-50 p-3 shadow-sm"
+        class="flex min-h-48 flex-col rounded-xl border border-neutral-200 bg-neutral-50 p-3 shadow-sm transition-shadow"
+        :class="{
+          'ring-2 ring-neutral-400 ring-offset-2 ring-offset-neutral-50':
+            dropHighlight === col.status,
+        }"
+        @dragover.prevent="setDropHighlight(col.status)"
       >
         <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
           <h2 class="text-sm font-semibold tracking-wide text-neutral-800">
@@ -68,17 +101,24 @@ function handleAddTask(status: TaskStatus) {
           </div>
         </div>
 
-        <ul v-if="col.tasks.length > 0" class="flex list-none flex-col gap-2 p-0">
-          <li v-for="task in col.tasks" :key="task.id">
-            <TaskCard :task="task" />
-          </li>
-        </ul>
-        <p
-          v-else
-          class="mt-auto rounded-lg border border-dashed border-neutral-300 bg-white/60 py-6 text-center text-sm text-neutral-500"
+        <div
+          class="flex flex-1 flex-col gap-2"
+          @dragover.prevent="setDropHighlight(col.status)"
+          @drop.prevent="handleColumnDrop($event, col.status)"
         >
-          No tasks yet
-        </p>
+          <ul v-if="col.tasks.length > 0" class="flex list-none flex-col gap-2 p-0">
+            <li v-for="task in col.tasks" :key="task.id">
+              <TaskCard :task="task" @dropped="handleTaskDropped($event, col.status)" />
+            </li>
+          </ul>
+          <p
+            v-else
+            class="mt-auto flex min-h-24 flex-1 items-center justify-center rounded-lg border border-dashed border-neutral-300 bg-white/60 py-6 text-center text-sm text-neutral-500"
+            @dragover.prevent
+          >
+            No tasks yet — drop a task here
+          </p>
+        </div>
       </section>
     </div>
   </div>
