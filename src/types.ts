@@ -22,3 +22,13 @@ export interface ShapeElement extends BaseElement {
 }
 
 export type CanvasElement = TextElement | ShapeElement
+
+export const MINI_EDITOR_STORAGE_KEY = 'mini-editor:document'
+
+/** Bump when the JSON shape changes (migrations). */
+export const EDITOR_DOCUMENT_VERSION = 1
+
+export interface EditorDocument {
+  version: number
+  elements: CanvasElement[]
+}
