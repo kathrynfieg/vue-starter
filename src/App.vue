@@ -21,15 +21,8 @@ import { TaskCard } from '@/components'
 import { TASK_DRAG_MIME, useTaskBoard } from '@/composables'
 import type { TaskStatus } from '@/types'
 
-const {
-  tasks,
-  columns,
-  addTask,
-  moveTask,
-  updateTask,
-  searchQuery,
-  hasActiveSearchFilter,
-} = useTaskBoard()
+const { tasks, columns, addTask, moveTask, updateTask, searchQuery, hasActiveSearchFilter } =
+  useTaskBoard()
 
 function tasksInColumn(status: TaskStatus) {
   return tasks.value.filter((t) => t.status === status).length
@@ -53,10 +46,7 @@ function handleTaskDropped(draggedTaskId: string, columnStatus: TaskStatus) {
   moveTask(draggedTaskId, columnStatus)
 }
 
-function handleTaskUpdate(
-  taskId: string,
-  updates: { title: string; description: string },
-) {
+function handleTaskUpdate(taskId: string, updates: { title: string; description: string }) {
   updateTask(taskId, updates)
 }
 
@@ -150,9 +140,7 @@ onUnmounted(() => {
             class="mt-auto flex min-h-24 flex-1 items-center justify-center rounded-lg border border-dashed border-neutral-300 bg-white/60 px-2 py-6 text-center text-sm text-neutral-500"
             @dragover.prevent
           >
-            <template
-              v-if="hasActiveSearchFilter && tasksInColumn(col.status) > 0"
-            >
+            <template v-if="hasActiveSearchFilter && tasksInColumn(col.status) > 0">
               No tasks match your search
             </template>
             <template v-else>No tasks yet — drop a task here</template>
