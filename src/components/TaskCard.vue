@@ -5,7 +5,7 @@ defineProps<{
   task: Task
 }>()
 
-const taskStatusMap: Record<TaskStatus, string> = {
+const taskStatusTitles: Record<TaskStatus, string> = {
   todo: 'Todo',
   in_progress: 'In Progress',
   done: 'Done',
@@ -22,7 +22,7 @@ const taskStatusMap: Record<TaskStatus, string> = {
       <span
         class="inline-flex rounded-full bg-neutral-100 px-2 py-0.5 text-xs font-medium capitalize text-neutral-700"
       >
-        {{ taskStatusMap[task.status] }}
+        {{ taskStatusTitles[task.status] }}
       </span>
       <span
         v-if="task.priority"
