@@ -50,5 +50,27 @@ export function useTaskBoard() {
     )
   }
 
-  return { tasks, columns, addTask, moveTask }
+  /** Updates title and/or description (empty description clears the field). */
+  function updateTask(
+    taskId: string,
+    updates: { title: string; description: string },
+  ) {
+    const title = updates.title.trim()
+    if (!title) return
+
+    const descriptionTrimmed = updates.description.trim()
+
+    tasks.value = tasks.value.map((task) =>
+      task.id === taskId
+        ? {
+            ...task,
+            title,
+            description:
+              descriptionTrimmed === '' ? undefined : descriptionTrimmed,
+          }
+        : task,
+    )
+  }
+
+  return { tasks, columns, addTask, moveTask, updateTask }
 }

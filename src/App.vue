@@ -21,7 +21,7 @@ import { TaskCard } from '@/components'
 import { TASK_DRAG_MIME, useTaskBoard } from '@/composables'
 import type { TaskStatus } from '@/types'
 
-const { tasks, columns, addTask, moveTask } = useTaskBoard()
+const { tasks, columns, addTask, moveTask, updateTask } = useTaskBoard()
 
 const dropHighlight = ref<TaskStatus | null>(null)
 
@@ -39,6 +39,13 @@ function handleAddTask(status: TaskStatus) {
 
 function handleTaskDropped(draggedTaskId: string, columnStatus: TaskStatus) {
   moveTask(draggedTaskId, columnStatus)
+}
+
+function handleTaskUpdate(
+  taskId: string,
+  updates: { title: string; description: string },
+) {
+  updateTask(taskId, updates)
 }
 
 function handleColumnDrop(e: DragEvent, columnStatus: TaskStatus) {
@@ -108,7 +115,11 @@ onUnmounted(() => {
         >
           <ul v-if="col.tasks.length > 0" class="flex list-none flex-col gap-2 p-0">
             <li v-for="task in col.tasks" :key="task.id">
-              <TaskCard :task="task" @dropped="handleTaskDropped($event, col.status)" />
+              <TaskCard
+                :task="task"
+                @dropped="handleTaskDropped($event, col.status)"
+                @update="handleTaskUpdate(task.id, $event)"
+              />
             </li>
           </ul>
           <p
