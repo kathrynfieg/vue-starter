@@ -21,7 +21,19 @@ import { TaskCard } from '@/components'
 import { TASK_DRAG_MIME, useTaskBoard } from '@/composables'
 import type { TaskStatus } from '@/types'
 
-const { tasks, columns, addTask, moveTask, updateTask } = useTaskBoard()
+const {
+  tasks,
+  columns,
+  addTask,
+  moveTask,
+  updateTask,
+  searchQuery,
+  hasActiveSearchFilter,
+} = useTaskBoard()
+
+function tasksInColumn(status: TaskStatus) {
+  return tasks.value.filter((t) => t.status === status).length
+}
 
 const dropHighlight = ref<TaskStatus | null>(null)
 
@@ -68,12 +80,23 @@ onUnmounted(() => {
 
 <template>
   <div class="mx-auto max-w-6xl px-4 py-8">
-    <header class="flex flex-wrap items-end justify-between gap-4">
+    <header class="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
       <div>
         <h1 class="text-3xl font-bold text-neutral-900">Task board</h1>
         <p class="mt-1 text-sm text-neutral-600">
           {{ tasks.length }} task{{ tasks.length === 1 ? '' : 's' }} total
         </p>
+      </div>
+      <div class="w-full sm:max-w-xs sm:flex-1 sm:shrink-0">
+        <label for="board-search" class="sr-only">Search tasks</label>
+        <input
+          id="board-search"
+          v-model="searchQuery"
+          type="search"
+          placeholder="Search by title or description…"
+          autocomplete="off"
+          class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 shadow-sm outline-none ring-neutral-400 placeholder:text-neutral-400 focus:ring-2"
+        />
       </div>
     </header>
 
@@ -124,10 +147,15 @@ onUnmounted(() => {
           </ul>
           <p
             v-else
-            class="mt-auto flex min-h-24 flex-1 items-center justify-center rounded-lg border border-dashed border-neutral-300 bg-white/60 py-6 text-center text-sm text-neutral-500"
+            class="mt-auto flex min-h-24 flex-1 items-center justify-center rounded-lg border border-dashed border-neutral-300 bg-white/60 px-2 py-6 text-center text-sm text-neutral-500"
             @dragover.prevent
           >
-            No tasks yet — drop a task here
+            <template
+              v-if="hasActiveSearchFilter && tasksInColumn(col.status) > 0"
+            >
+              No tasks match your search
+            </template>
+            <template v-else>No tasks yet — drop a task here</template>
           </p>
         </div>
       </section>

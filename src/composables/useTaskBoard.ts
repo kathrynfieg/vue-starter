@@ -1,5 +1,5 @@
 import { useLocalStorage } from '@vueuse/core'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import type { Task, TaskStatus } from '@/types'
 
 const TASKS_STORAGE_KEY = 'vue-starter:task-board'
@@ -18,13 +18,29 @@ export const BOARD_COLUMNS: BoardColumn[] = [
   { status: 'done', title: 'Done' },
 ]
 
+function taskMatchesSearch(task: Task, query: string): boolean {
+  const needle = query.trim().toLowerCase()
+  if (!needle) return true
+  if (task.title.toLowerCase().includes(needle)) return true
+  if (task.description?.toLowerCase().includes(needle)) return true
+  return false
+}
+
 export function useTaskBoard() {
   const tasks = useLocalStorage<Task[]>(TASKS_STORAGE_KEY, [])
+
+  const searchQuery = ref('')
+
+  const hasActiveSearchFilter = computed(
+    () => searchQuery.value.trim().length > 0,
+  )
 
   const columns = computed(() =>
     BOARD_COLUMNS.map((col) => ({
       ...col,
-      tasks: tasks.value.filter((t) => t.status === col.status),
+      tasks: tasks.value
+        .filter((t) => t.status === col.status)
+        .filter((t) => taskMatchesSearch(t, searchQuery.value)),
     })),
   )
 
@@ -51,10 +67,7 @@ export function useTaskBoard() {
   }
 
   /** Updates title and/or description (empty description clears the field). */
-  function updateTask(
-    taskId: string,
-    updates: { title: string; description: string },
-  ) {
+  function updateTask(taskId: string, updates: { title: string; description: string }) {
     const title = updates.title.trim()
     if (!title) return
 
@@ -65,12 +78,24 @@ export function useTaskBoard() {
         ? {
             ...task,
             title,
-            description:
-              descriptionTrimmed === '' ? undefined : descriptionTrimmed,
+            description: descriptionTrimmed === '' ? undefined : descriptionTrimmed,
           }
         : task,
     )
   }
+  
+  function searchTasks(query: string) {
+    searchQuery.value = query
+  }
 
-  return { tasks, columns, addTask, moveTask, updateTask }
+  return {
+    tasks,
+    columns,
+    addTask,
+    moveTask,
+    updateTask,
+    searchQuery,
+    hasActiveSearchFilter,
+    searchTasks,
+  }
 }
