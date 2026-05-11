@@ -129,7 +129,7 @@ function onKeyDown(event: KeyboardEvent) {
     return
   }
 
-  if (!props.selected || isLocked.value) {
+  if (!props.selected) {
     return
   }
 
