@@ -31,23 +31,16 @@ const emit = defineEmits<{
 const isDragging = ref(false)
 const dragOffset = ref({ x: 0, y: 0 })
 
-const isLocked = computed(() => Boolean(props.element.isLocked))
-
 const shapeWidth = computed(() =>
-  props.element.shapeType === 'rectangle'
-    ? props.element.width
-    : props.element.radius * 2,
+  props.element.shapeType === 'rectangle' ? props.element.width : props.element.radius * 2,
 )
 
 const shapeHeight = computed(() =>
-  props.element.shapeType === 'rectangle'
-    ? props.element.height
-    : props.element.radius * 2,
+  props.element.shapeType === 'rectangle' ? props.element.height : props.element.radius * 2,
 )
 
 const ariaLabel = computed(() => {
-  const shapeName =
-    props.element.shapeType === 'rectangle' ? 'Rectangle' : 'Circle'
+  const shapeName = props.element.shapeType === 'rectangle' ? 'Rectangle' : 'Circle'
   return `${shapeName} shape`
 })
 
@@ -90,10 +83,6 @@ function selectShape() {
 }
 
 function onPointerDown(event: PointerEvent) {
-  if (isLocked.value || event.button !== 0) {
-    return
-  }
-
   selectShape()
 
   isDragging.value = true
@@ -109,10 +98,6 @@ function onPointerDown(event: PointerEvent) {
 }
 
 function onPointerMove(event: PointerEvent) {
-  if (!isDragging.value || isLocked.value) {
-    return
-  }
-
   const unclampedX = event.clientX - dragOffset.value.x
   const unclampedY = event.clientY - dragOffset.value.y
   const { x, y } = clampPosition(unclampedX, unclampedY)
@@ -181,15 +166,11 @@ onBeforeUnmount(() => {
     class="shape-element absolute touch-none outline-none"
     :class="{
       'ring-2 ring-blue-500 ring-offset-2': selected,
-      'cursor-grabbing': isDragging && !isLocked,
-      'cursor-grab': !isDragging && !isLocked,
-      'cursor-not-allowed opacity-70': isLocked,
     }"
     :style="shapeStyles"
     role="button"
     :aria-label="ariaLabel"
     :aria-selected="selected"
-    :aria-disabled="isLocked"
     tabindex="0"
     @click.stop="selectShape"
     @pointerdown.stop="onPointerDown"

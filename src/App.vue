@@ -7,6 +7,7 @@ import { useShapeElements } from './composables/useShapeElements'
 
 const canvasRef = ref<HTMLElement | null>(null)
 const { width: canvasWidth, height: canvasHeight } = useElementSize(canvasRef)
+
 const {
   shapes,
   selectedShapeId,
