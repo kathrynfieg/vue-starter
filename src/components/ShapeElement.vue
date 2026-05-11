@@ -163,6 +163,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div
+    data-test="shape-element"
     class="shape-element absolute touch-none outline-none"
     :class="{
       'ring-2 ring-blue-500 ring-offset-2': selected,
