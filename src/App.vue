@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { Plus } from 'lucide-vue-next'
 import type { Trip, UserProfile } from '@/types/journal'
 import ProfileHeader from '@/components/ProfileHeader.vue'
 import NavBar from '@/components/NavBar.vue'
 import TripSection from '@/components/journal/TripSection.vue'
+import TripTilesView from '@/components/journal/TripTilesView.vue'
 
 const mockUserProfile: UserProfile = {
   id: 'u1',
@@ -324,6 +325,10 @@ const lastTripCard = computed(() => {
 function onAddTrip() {
   console.log('[journal] Add trip clicked (UI only — not implemented)')
 }
+
+type TripsLayout = 'feed' | 'tiles'
+
+const tripsLayout = ref<TripsLayout>('feed')
 </script>
 
 <template>
@@ -345,19 +350,58 @@ function onAddTrip() {
 
         <!-- Feed -->
         <main id="journal" class="mt-10 min-w-0 space-y-6 lg:mt-0 lg:space-y-8">
-          <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
             <p class="text-xs font-medium uppercase tracking-wide text-stone-500">Journal</p>
-            <button
-              type="button"
-              class="inline-flex items-center gap-1.5 rounded-lg bg-teal-800 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-teal-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-800"
-              @click="onAddTrip"
-            >
-              <Plus class="size-3.5 shrink-0" :stroke-width="2.5" aria-hidden="true" />
-              Add trip
-            </button>
+            <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+              <div
+                class="inline-flex rounded-lg bg-stone-200/90 p-0.5 ring-1 ring-stone-300/80"
+                role="tablist"
+                aria-label="Trip layout"
+              >
+                <button
+                  type="button"
+                  role="tab"
+                  class="rounded-md px-3 py-1.5 text-xs font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-800 sm:text-sm"
+                  :class="
+                    tripsLayout === 'feed'
+                      ? 'bg-white text-stone-900 shadow-sm'
+                      : 'text-stone-600 hover:text-stone-900'
+                  "
+                  :aria-selected="tripsLayout === 'feed'"
+                  @click="tripsLayout = 'feed'"
+                >
+                  Feed
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  class="rounded-md px-3 py-1.5 text-xs font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-800 sm:text-sm"
+                  :class="
+                    tripsLayout === 'tiles'
+                      ? 'bg-white text-stone-900 shadow-sm'
+                      : 'text-stone-600 hover:text-stone-900'
+                  "
+                  :aria-selected="tripsLayout === 'tiles'"
+                  @click="tripsLayout = 'tiles'"
+                >
+                  Tiles
+                </button>
+              </div>
+              <button
+                type="button"
+                class="inline-flex items-center gap-1.5 rounded-lg bg-teal-800 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-teal-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-800"
+                @click="onAddTrip"
+              >
+                <Plus class="size-3.5 shrink-0" :stroke-width="2.5" aria-hidden="true" />
+                Add trip
+              </button>
+            </div>
           </div>
 
-          <TripSection v-for="trip in mockTrips" :key="trip.id" :trip="trip" />
+          <TripTilesView v-if="tripsLayout === 'tiles'" :trips="mockTrips" />
+          <template v-else>
+            <TripSection v-for="trip in mockTrips" :key="trip.id" :trip="trip" />
+          </template>
         </main>
       </div>
     </div>
