@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { ShapeElement, ShapeType } from '../types'
+import type { ShapeType, ShapeElement, TextElement } from '../types'
+
+type CanvasElement = ShapeElement | TextElement
 
 const props = withDefaults(
   defineProps<{
-    selectedElement?: ShapeElement | null
+    selectedElement?: CanvasElement | null
     disableAdd?: boolean
   }>(),
   {
@@ -15,6 +17,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   (event: 'add-shape', shapeType: ShapeType): void
+  (event: 'add-text'): void
   (event: 'delete-selected'): void
   (event: 'toggle-lock-selected', nextLocked: boolean): void
 }>()
@@ -26,6 +29,13 @@ function addShape(shapeType: ShapeType) {
     return
   }
   emit('add-shape', shapeType)
+}
+
+function addText() {
+  if (props.disableAdd) {
+    return
+  }
+  emit('add-text')
 }
 
 function deleteSelected() {
@@ -60,6 +70,15 @@ function deleteSelected() {
         @click="addShape('circle')"
       >
         Add Circle
+      </button>
+      <button
+        type="button"
+        class="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+        :disabled="disableAdd"
+        aria-label="Add text"
+        @click="addText"
+      >
+        Add Text
       </button>
     </div>
 

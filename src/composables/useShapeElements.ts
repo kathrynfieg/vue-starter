@@ -1,11 +1,18 @@
 import { computed, ref } from 'vue'
-import type { ShapeElement, ShapeType } from '../types'
+import type { ShapeElement, ShapeType, TextElement } from '../types'
 
 interface DragPayload {
   id: string
   x: number
   y: number
 }
+
+interface UpdateTextPayload {
+  id: string
+  content: string
+}
+
+type CanvasElement = ShapeElement | TextElement
 
 function createShape(shapeType: ShapeType): ShapeElement {
   if (shapeType === 'rectangle') {
@@ -37,68 +44,117 @@ function createShape(shapeType: ShapeType): ShapeElement {
   }
 }
 
-export function useShapeElements() {
-  const shapes = ref<ShapeElement[]>([])
+function createText(): TextElement {
+  return {
+    id: crypto.randomUUID(),
+    type: 'text',
+    content: 'Double click to edit',
+    x: 80,
+    y: 80,
+    width: 220,
+    height: 40,
+    fontSize: 24,
+    fontFamily: 'Inter, sans-serif',
+    color: '#0f172a',
+    rotation: 0,
+    zIndex: Date.now(),
+  }
+}
 
-  const selectedShapeId = ref<string | null>(null)
+export function useShapeElements() {
+  const elements = ref<CanvasElement[]>([])
+
+  const selectedElementId = ref<string | null>(null)
 
   const selectedElement = computed(
-    () => shapes.value.find((shape) => shape.id === selectedShapeId.value) ?? null,
+    () => elements.value.find((element) => element.id === selectedElementId.value) ?? null,
+  )
+
+  const shapes = computed(() =>
+    elements.value.filter((element): element is ShapeElement => element.type === 'shape'),
+  )
+
+  const texts = computed(() =>
+    elements.value.filter((element): element is TextElement => element.type === 'text'),
   )
 
   function addShape(shapeType: ShapeType) {
     const newShape = createShape(shapeType)
-    shapes.value.push(newShape)
-    selectedShapeId.value = newShape.id
+    elements.value.push(newShape)
+    selectedElementId.value = newShape.id
   }
 
-  function selectShape(id: string) {
-    selectedShapeId.value = id
+  function addText() {
+    const newText = createText()
+    elements.value.push(newText)
+    selectedElementId.value = newText.id
+  }
+
+  function selectElement(id: string) {
+    selectedElementId.value = id
   }
 
   function clearSelection() {
-    selectedShapeId.value = null
+    selectedElementId.value = null
   }
 
-  function updateShapePosition({ id, x, y }: DragPayload) {
-    const index = shapes.value.findIndex((shape) => shape.id === id)
+  function updateElementPosition({ id, x, y }: DragPayload) {
+    const index = elements.value.findIndex((element) => element.id === id)
     if (index === -1) {
       return
     }
 
-    const target = shapes.value[index]
-    shapes.value[index] = {
+    const target = elements.value[index]
+    elements.value[index] = {
       ...target,
       x,
       y,
     }
   }
 
-  function deleteSelectedShape() {
-    if (!selectedShapeId.value) {
+  function deleteSelectedElement() {
+    if (!selectedElementId.value) {
       return
     }
 
-    shapes.value = shapes.value.filter((shape) => shape.id !== selectedShapeId.value)
-    selectedShapeId.value = null
+    elements.value = elements.value.filter((element) => element.id !== selectedElementId.value)
+    selectedElementId.value = null
   }
 
-  function deleteShapeById(id: string) {
-    shapes.value = shapes.value.filter((shape) => shape.id !== id)
-    if (selectedShapeId.value === id) {
-      selectedShapeId.value = null
+  function deleteElementById(id: string) {
+    elements.value = elements.value.filter((element) => element.id !== id)
+    if (selectedElementId.value === id) {
+      selectedElementId.value = null
+    }
+  }
+
+  function updateTextContent({ id, content }: UpdateTextPayload) {
+    const index = elements.value.findIndex(
+      (element): element is TextElement => element.type === 'text' && element.id === id,
+    )
+    if (index === -1) {
+      return
+    }
+
+    elements.value[index] = {
+      ...elements.value[index],
+      content,
     }
   }
 
   return {
+    elements,
     shapes,
-    selectedShapeId,
+    texts,
+    selectedElementId,
     selectedElement,
     addShape,
-    selectShape,
+    addText,
+    selectElement,
     clearSelection,
-    updateShapePosition,
-    deleteSelectedShape,
-    deleteShapeById,
+    updateElementPosition,
+    updateTextContent,
+    deleteSelectedElement,
+    deleteElementById,
   }
 }

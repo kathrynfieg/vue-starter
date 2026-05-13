@@ -1,6 +1,6 @@
 export type ShapeType = 'rectangle' | 'circle'
 
-export type CanvasElementType = 'shape'
+export type CanvasElementType = 'shape' | 'text'
 
 export interface BaseElement {
   id: string
@@ -9,7 +9,7 @@ export interface BaseElement {
   y: number
   rotation: number
   zIndex: number
-  isLocked?: boolean
+  // isLocked?: boolean
 }
 
 export interface ShapeStyle {

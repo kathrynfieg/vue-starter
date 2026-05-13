@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { useElementSize } from '@vueuse/core'
 import ShapeElement from './components/ShapeElement.vue'
+import TextElement from './components/TextElement.vue'
 import ToolbarElement from './components/ToolbarElement.vue'
 import { useShapeElements } from './composables/useShapeElements'
 
@@ -10,14 +11,17 @@ const { width: canvasWidth, height: canvasHeight } = useElementSize(canvasRef)
 
 const {
   shapes,
-  selectedShapeId,
+  texts,
+  selectedElementId,
   selectedElement,
   addShape,
-  selectShape,
+  addText,
+  selectElement,
   clearSelection,
-  updateShapePosition,
-  deleteSelectedShape,
-  deleteShapeById,
+  updateElementPosition,
+  updateTextContent,
+  deleteSelectedElement,
+  deleteElementById,
 } = useShapeElements()
 
 const canvasBounds = computed(() => ({
@@ -31,7 +35,8 @@ const canvasBounds = computed(() => ({
     <ToolbarElement
       :selected-element="selectedElement"
       @add-shape="addShape"
-      @delete-selected="deleteSelectedShape"
+      @add-text="addText"
+      @delete-selected="deleteSelectedElement"
     />
 
     <section
@@ -45,19 +50,32 @@ const canvasBounds = computed(() => ({
         v-for="shape in shapes"
         :key="shape.id"
         :element="shape"
-        :selected="shape.id === selectedShapeId"
+        :selected="shape.id === selectedElementId"
         :canvas-bounds="canvasBounds"
-        @select="selectShape"
-        @drag-move="updateShapePosition"
-        @drag-end="updateShapePosition"
-        @request-delete="deleteShapeById"
+        @select="selectElement"
+        @drag-move="updateElementPosition"
+        @drag-end="updateElementPosition"
+        @update-text="updateTextContent"
+        @request-delete="deleteElementById"
+      />
+
+      <TextElement
+        v-for="text in texts"
+        :key="text.id"
+        :element="text"
+        :selected="text.id === selectedElementId"
+        :canvas-bounds="canvasBounds"
+        @select="selectElement"
+        @drag-move="updateElementPosition"
+        @drag-end="updateElementPosition"
+        @request-delete="deleteElementById"
       />
 
       <p
-        v-if="shapes.length === 0"
+        v-if="shapes.length === 0 && texts.length === 0"
         class="absolute inset-0 grid place-items-center text-sm text-slate-500"
       >
-        Add a shape from the toolbar to start
+        Add a shape or text from the toolbar to start
       </p>
     </section>
   </main>
