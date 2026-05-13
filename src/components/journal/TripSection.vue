@@ -40,18 +40,22 @@ defineProps<{
       </div>
     </div>
 
-    <!-- Gallery grid -->
+    <!-- Memories: single row; inner flex + w-max keeps horizontal padding inside scroll width -->
     <div
-      class="grid grid-flow-dense grid-cols-3 gap-1.5 p-2 sm:grid-cols-4 sm:gap-2 sm:p-2.5"
+      class="overflow-x-auto overscroll-x-contain py-2 touch-pan-x [scrollbar-width:thin] scroll-pl-2 scroll-pr-2 sm:scroll-pl-2.5 sm:scroll-pr-2.5 sm:py-2.5"
     >
-      <template v-for="memory in trip.memories" :key="memory.id">
-        <div class="col-span-1 min-h-0 min-w-0 self-start">
-          <MemoryPhotoTile v-if="memory.type === 'photo'" :memory="memory" class="w-full" />
-          <MemoryQuoteTile v-else-if="memory.type === 'quote'" :memory="memory" class="w-full" />
-          <MemoryQaTile v-else-if="memory.type === 'qa'" :memory="memory" class="w-full" />
-          <MemoryListTile v-else-if="memory.type === 'list'" :memory="memory" class="w-full" />
-        </div>
-      </template>
+      <div
+        class="flex w-max snap-x snap-mandatory gap-2.5 px-2 sm:gap-3 sm:px-2.5"
+      >
+        <template v-for="memory in trip.memories" :key="memory.id">
+          <div class="w-28 shrink-0 snap-start sm:w-32">
+            <MemoryPhotoTile v-if="memory.type === 'photo'" :memory="memory" class="w-full" />
+            <MemoryQuoteTile v-else-if="memory.type === 'quote'" :memory="memory" class="w-full" />
+            <MemoryQaTile v-else-if="memory.type === 'qa'" :memory="memory" class="w-full" />
+            <MemoryListTile v-else-if="memory.type === 'list'" :memory="memory" class="w-full" />
+          </div>
+        </template>
+      </div>
     </div>
   </article>
 </template>
