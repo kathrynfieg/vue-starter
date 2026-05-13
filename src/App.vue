@@ -1,18 +1,15 @@
 <script setup lang="ts">
-export const mockUserProfile = {
-  id: 'u1',
+import type { Trip } from '@/types/journal'
+import TripSection from '@/components/journal/TripSection.vue'
 
+const mockUserProfile = {
+  id: 'u1',
   name: 'Kathryn Fieg',
   username: 'kathryntravels',
-
   profile_photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2',
-
   bio: 'Collecting small moments from big and small trips. Mostly sunsets, coffee, and camping nights.',
-
   homebase: 'Adelaide, Australia',
-
   countries_visited: ['Australia', 'Japan', 'Italy', 'New Zealand', 'Thailand', 'France'],
-
   stats: {
     trips: 12,
     memories: 87,
@@ -20,7 +17,7 @@ export const mockUserProfile = {
   },
 }
 
-const mockTrips = [
+const mockTrips: Trip[] = [
   {
     id: 't1',
     title: 'Japan Adventure',
@@ -69,7 +66,6 @@ const mockTrips = [
       },
     ],
   },
-
   {
     id: 't2',
     title: 'Great Ocean Road Camping',
@@ -104,7 +100,6 @@ const mockTrips = [
       },
     ],
   },
-
   {
     id: 't3',
     title: 'Adelaide Hills Weekend Escape',
@@ -130,7 +125,6 @@ const mockTrips = [
       },
     ],
   },
-
   {
     id: 't4',
     title: 'Italy Summer Days',
@@ -165,7 +159,6 @@ const mockTrips = [
       },
     ],
   },
-
   {
     id: 't5',
     title: 'Flinders Ranges Camping Trip',
@@ -204,5 +197,78 @@ const mockTrips = [
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold underline">Hello world!</h1>
+  <div class="min-h-screen bg-stone-50 text-stone-900 antialiased">
+    <div class="mx-auto max-w-xl px-5 pb-16 pt-10 sm:max-w-2xl sm:px-8">
+      <!-- Profile -->
+      <header class="border-b border-stone-200 pb-10">
+        <div class="flex flex-col gap-6 sm:flex-row sm:items-start">
+          <img
+            :src="mockUserProfile.profile_photo"
+            :alt="mockUserProfile.name"
+            class="h-24 w-24 shrink-0 rounded-full object-cover ring-2 ring-teal-800/20"
+          />
+          <div class="min-w-0 flex-1 space-y-3">
+            <div>
+              <h1 class="text-2xl font-semibold tracking-tight text-stone-900">
+                {{ mockUserProfile.name }}
+              </h1>
+              <p class="mt-0.5 text-sm text-teal-800">@{{ mockUserProfile.username }}</p>
+            </div>
+            <p class="text-sm leading-relaxed text-stone-600">
+              {{ mockUserProfile.bio }}
+            </p>
+            <p class="text-sm text-stone-700">
+              <span class="font-medium text-stone-900">Homebase</span>
+              <span class="text-stone-400"> · </span>
+              {{ mockUserProfile.homebase }}
+            </p>
+            <div>
+              <p class="mb-2 text-xs font-medium uppercase tracking-wide text-stone-500">
+                Countries visited
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  v-for="country in mockUserProfile.countries_visited"
+                  :key="country"
+                  class="rounded-full border border-teal-800/25 bg-white px-3 py-1 text-xs font-medium text-teal-900"
+                >
+                  {{ country }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <dl
+          class="mt-8 grid grid-cols-3 gap-4 border-t border-stone-200 pt-8 text-center sm:text-left"
+        >
+          <div>
+            <dt class="text-xs font-medium uppercase tracking-wide text-stone-500">Trips</dt>
+            <dd class="mt-1 text-xl font-semibold tabular-nums text-teal-900">
+              {{ mockUserProfile.stats.trips }}
+            </dd>
+          </div>
+          <div>
+            <dt class="text-xs font-medium uppercase tracking-wide text-stone-500">Memories</dt>
+            <dd class="mt-1 text-xl font-semibold tabular-nums text-teal-900">
+              {{ mockUserProfile.stats.memories }}
+            </dd>
+          </div>
+          <div>
+            <dt class="text-xs font-medium uppercase tracking-wide text-stone-500">Photos</dt>
+            <dd class="mt-1 text-xl font-semibold tabular-nums text-teal-900">
+              {{ mockUserProfile.stats.photos }}
+            </dd>
+          </div>
+        </dl>
+      </header>
+
+      <!-- Feed -->
+      <main class="mt-12 space-y-6">
+        <p class="text-xs font-medium uppercase tracking-wide text-stone-500">Journal</p>
+
+        <TripSection v-for="trip in mockTrips" :key="trip.id" :trip="trip" />
+      </main>
+    </div>
+  </div>
 </template>
