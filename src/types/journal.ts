@@ -42,3 +42,20 @@ export type Trip = {
   cover_image: string
   memories: Memory[]
 }
+
+export type UserProfileStats = {
+  trips: number
+  memories: number
+  photos: number
+}
+
+export type UserProfile = {
+  id: string
+  name: string
+  username: string
+  profile_photo: string
+  bio?: string
+  homebase: string
+  countries_visited: string[]
+  stats: UserProfileStats
+}
