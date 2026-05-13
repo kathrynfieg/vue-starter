@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { MessagesSquare } from 'lucide-vue-next'
 import type { QaMemory } from '@/types/journal'
 import { formatDate } from '@/utils/journalFormat'
 
@@ -9,8 +10,13 @@ defineProps<{
 
 <template>
   <div
-    class="flex aspect-square w-full flex-col overflow-hidden rounded-md border border-stone-200 bg-stone-100/80 p-1.5"
+    class="relative flex aspect-square w-full flex-col overflow-hidden rounded-md border border-stone-200 bg-stone-100/80 p-1.5"
   >
+    <MessagesSquare
+      class="absolute right-0.5 top-0.5 size-3 text-teal-800/40 sm:size-3.5"
+      :stroke-width="1.5"
+      aria-hidden="true"
+    />
     <p
       class="shrink-0 text-[8px] font-semibold uppercase leading-tight tracking-wide text-teal-800 line-clamp-3"
     >

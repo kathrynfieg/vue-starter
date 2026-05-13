@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Quote } from 'lucide-vue-next'
 import type { QuoteMemory } from '@/types/journal'
 import { formatDate } from '@/utils/journalFormat'
 
@@ -9,8 +10,13 @@ defineProps<{
 
 <template>
   <div
-    class="flex aspect-square w-full flex-col overflow-hidden rounded-md border border-teal-800/20 bg-teal-800/[0.06] p-2"
+    class="relative flex aspect-square w-full flex-col overflow-hidden rounded-md border border-teal-800/20 bg-teal-800/[0.06] p-2"
   >
+    <Quote
+      class="absolute right-1 top-1 size-3 text-teal-800/45 sm:size-3.5"
+      :stroke-width="1.5"
+      aria-hidden="true"
+    />
     <div class="flex min-h-0 flex-1 flex-col items-center justify-center px-0.5">
       <p class="text-center text-[10px] leading-snug italic text-stone-700 line-clamp-6">
         “{{ memory.text }}”

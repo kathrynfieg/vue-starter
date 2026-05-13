@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { List } from 'lucide-vue-next'
 import type { ListMemory } from '@/types/journal'
 import { formatDate } from '@/utils/journalFormat'
 
@@ -9,8 +10,13 @@ defineProps<{
 
 <template>
   <div
-    class="flex aspect-square w-full flex-col overflow-hidden rounded-md border border-stone-200 bg-white p-1.5"
+    class="relative flex aspect-square w-full flex-col overflow-hidden rounded-md border border-stone-200 bg-white p-1.5"
   >
+    <List
+      class="absolute right-0.5 top-0.5 size-3 text-stone-400 sm:size-3.5"
+      :stroke-width="1.5"
+      aria-hidden="true"
+    />
     <p class="shrink-0 text-[9px] font-semibold leading-tight text-stone-900 line-clamp-2">
       {{ memory.title }}
     </p>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Calendar, Images, MapPin } from 'lucide-vue-next'
 import type { Trip } from '@/types/journal'
 import { formatTripRange } from '@/utils/journalFormat'
 import MemoryListTile from './MemoryListTile.vue'
@@ -12,9 +13,7 @@ defineProps<{
 </script>
 
 <template>
-  <article
-    class="overflow-hidden rounded-xl bg-white ring-1 ring-stone-200 shadow-sm"
-  >
+  <article class="overflow-hidden rounded-xl bg-white ring-1 ring-stone-200 shadow-sm">
     <!-- Compact trip header -->
     <div class="flex gap-3 border-b border-stone-100 p-3 sm:p-3.5">
       <img
@@ -27,11 +26,15 @@ defineProps<{
           <h2 class="text-sm font-semibold tracking-tight text-stone-900 sm:text-base">
             {{ trip.title }}
           </h2>
-          <span class="text-[10px] text-stone-400 sm:text-xs">
+          <span class="inline-flex items-center gap-1 text-[10px] text-stone-400 sm:text-xs">
+            <Calendar class="size-3 shrink-0 opacity-80" :stroke-width="1.5" aria-hidden="true" />
             {{ formatTripRange(trip.start_date, trip.end_date) }}
           </span>
         </div>
-        <p class="mt-0.5 text-[10px] font-medium uppercase tracking-wide text-teal-800 sm:text-[11px]">
+        <p
+          class="mt-0.5 inline-flex items-center gap-1 text-[10px] font-medium uppercase tracking-wide text-teal-800 sm:text-[11px]"
+        >
+          <MapPin class="size-3 shrink-0" :stroke-width="1.5" aria-hidden="true" />
           {{ trip.location_text }}
         </p>
         <p class="mt-1 line-clamp-2 text-[11px] leading-snug text-stone-600 sm:text-xs">
@@ -44,9 +47,7 @@ defineProps<{
     <div
       class="overflow-x-auto overscroll-x-contain py-2 touch-pan-x [scrollbar-width:thin] scroll-pl-2 scroll-pr-2 sm:scroll-pl-2.5 sm:scroll-pr-2.5 sm:py-2.5"
     >
-      <div
-        class="flex w-max snap-x snap-mandatory gap-2.5 px-2 sm:gap-3 sm:px-2.5"
-      >
+      <div class="flex w-max snap-x snap-mandatory gap-2.5 px-2 sm:gap-3 sm:px-2.5">
         <template v-for="memory in trip.memories" :key="memory.id">
           <div class="w-28 shrink-0 snap-start sm:w-32">
             <MemoryPhotoTile v-if="memory.type === 'photo'" :memory="memory" class="w-full" />
