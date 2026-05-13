@@ -322,15 +322,25 @@ const lastTripCard = computed(() => {
 
 <template>
   <div class="min-h-screen bg-slate-100 text-slate-900 antialiased">
-    <div class="mx-auto max-w-xl px-5 pb-16 pt-10 sm:max-w-2xl sm:px-8">
-      <ProfileHeader :profile="mockUserProfile" :last-trip="lastTripCard" />
+    <div
+      class="mx-auto max-w-xl px-5 pb-16 pt-10 sm:max-w-2xl sm:px-8 lg:max-w-6xl xl:max-w-7xl"
+    >
+      <div
+        class="flex flex-col lg:grid lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:items-start lg:gap-8 xl:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] xl:gap-12"
+      >
+        <aside
+          class="lg:sticky lg:top-8 lg:self-start lg:border-r lg:border-gray-200 lg:pr-8 xl:pr-10"
+        >
+          <ProfileHeader :profile="mockUserProfile" :last-trip="lastTripCard" />
+        </aside>
 
-      <!-- Feed -->
-      <main class="mt-12 space-y-6">
-        <p class="text-xs font-medium uppercase tracking-wide text-stone-500">Journal</p>
+        <!-- Feed -->
+        <main class="mt-10 min-w-0 space-y-6 lg:mt-0 lg:space-y-8">
+          <p class="text-xs font-medium uppercase tracking-wide text-stone-500">Journal</p>
 
-        <TripSection v-for="trip in mockTrips" :key="trip.id" :trip="trip" />
-      </main>
+          <TripSection v-for="trip in mockTrips" :key="trip.id" :trip="trip" />
+        </main>
+      </div>
     </div>
   </div>
 </template>
