@@ -25,7 +25,8 @@ const mockTrips: Trip[] = [
     start_date: '2026-05-01',
     end_date: '2026-05-14',
     location_text: 'Japan',
-    cover_image: 'https://images.unsplash.com/photo-1549692520-acc6669e2f0c',
+    cover_image:
+      'https://images.unsplash.com/photo-1728877648326-1e571d43c32b?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     memories: [
       {
         id: 'm1',
@@ -44,7 +45,8 @@ const mockTrips: Trip[] = [
       {
         id: 'm3',
         type: 'photo',
-        photo_url: 'https://images.unsplash.com/photo-1526481280695-3c687fd5432c',
+        photo_url:
+          'https://images.unsplash.com/photo-1717649389730-ba6d16053b43?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         caption: 'Kyoto temples in the early morning fog',
         location_text: 'Kyoto',
         created_at: '2026-05-07',
@@ -73,7 +75,8 @@ const mockTrips: Trip[] = [
     start_date: '2026-04-18',
     end_date: '2026-04-20',
     location_text: 'Victoria, Australia',
-    cover_image: 'https://images.unsplash.com/photo-1506976785307-8732e854ad03',
+    cover_image:
+      'https://images.unsplash.com/photo-1510312305653-8ed496efae75?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     memories: [
       {
         id: 'm6',
@@ -152,7 +155,8 @@ const mockTrips: Trip[] = [
       {
         id: 'm13',
         type: 'photo',
-        photo_url: 'https://images.unsplash.com/photo-1523986371872-9d3ba2e2f642',
+        photo_url:
+          'https://images.unsplash.com/photo-1686199859328-7660f648e70d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aXRhbHklMjBwYXN0YXxlbnwwfHwwfHx8Mg%3D%3D',
         caption: 'Pasta that ruined all future pasta for me',
         location_text: 'Rome',
         created_at: '2025-06-16',

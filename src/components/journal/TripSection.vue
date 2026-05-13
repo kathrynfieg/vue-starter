@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Memory, Trip } from '@/types/journal'
+import type { Trip } from '@/types/journal'
 import { formatTripRange } from '@/utils/journalFormat'
 import MemoryListTile from './MemoryListTile.vue'
 import MemoryPhotoTile from './MemoryPhotoTile.vue'
@@ -9,18 +9,6 @@ import MemoryQuoteTile from './MemoryQuoteTile.vue'
 defineProps<{
   trip: Trip
 }>()
-
-function tileClass(memory: Memory): string {
-  switch (memory.type) {
-    case 'photo':
-      return 'col-span-1 self-start'
-    case 'quote':
-    case 'qa':
-      return 'col-span-3 min-[400px]:col-span-2 sm:col-span-2'
-    case 'list':
-      return 'col-span-3 sm:col-span-4'
-  }
-}
 </script>
 
 <template>
@@ -57,11 +45,11 @@ function tileClass(memory: Memory): string {
       class="grid grid-flow-dense grid-cols-3 gap-1.5 p-2 sm:grid-cols-4 sm:gap-2 sm:p-2.5"
     >
       <template v-for="memory in trip.memories" :key="memory.id">
-        <div :class="tileClass(memory)" class="min-h-0 min-w-0">
+        <div class="col-span-1 min-h-0 min-w-0 self-start">
           <MemoryPhotoTile v-if="memory.type === 'photo'" :memory="memory" class="w-full" />
-          <MemoryQuoteTile v-else-if="memory.type === 'quote'" :memory="memory" class="h-full min-h-[5.5rem]" />
-          <MemoryQaTile v-else-if="memory.type === 'qa'" :memory="memory" class="h-full min-h-[5.5rem]" />
-          <MemoryListTile v-else-if="memory.type === 'list'" :memory="memory" class="h-full min-h-[5.5rem]" />
+          <MemoryQuoteTile v-else-if="memory.type === 'quote'" :memory="memory" class="w-full" />
+          <MemoryQaTile v-else-if="memory.type === 'qa'" :memory="memory" class="w-full" />
+          <MemoryListTile v-else-if="memory.type === 'list'" :memory="memory" class="w-full" />
         </div>
       </template>
     </div>
