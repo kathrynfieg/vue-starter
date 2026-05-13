@@ -61,20 +61,20 @@ const iconProps = {
 
     <!-- Stat cards: always 4 columns -->
     <div class="border-b border-gray-200 pb-8">
-      <div class="grid grid-cols-4 gap-1.5 sm:gap-3 md:gap-4">
+      <div class="grid grid-cols-4 items-stretch gap-1.5 sm:gap-3 md:gap-4">
         <div
-          class="flex min-w-0 flex-col items-center rounded-xl bg-white px-1.5 py-3 text-center shadow-sm ring-1 ring-teal-800/15 sm:items-start sm:px-4 sm:py-4 sm:text-left"
+          class="flex h-full min-h-0 min-w-0 flex-col items-center rounded-xl bg-white px-1.5 py-3 text-center shadow-sm ring-1 ring-teal-800/15 sm:items-start sm:px-4 sm:py-4 sm:text-left"
         >
           <p
-            class="text-[9px] font-semibold uppercase leading-tight tracking-wide text-teal-800 sm:text-xs sm:tracking-wide"
+            class="shrink-0 text-[9px] font-semibold uppercase leading-tight tracking-wide text-teal-800 sm:text-xs sm:tracking-wide"
           >
             Countries
           </p>
-          <p class="mt-1.5 text-lg font-bold tabular-nums text-teal-950 sm:mt-2 sm:text-2xl">
+          <p class="mt-1.5 shrink-0 text-lg font-bold tabular-nums text-teal-950 sm:mt-2 sm:text-2xl">
             {{ profile.countries_visited.length }}
           </p>
           <div
-            class="mt-2 flex flex-col items-center gap-0.5 text-gray-600 sm:mt-3 sm:flex-row sm:items-center sm:gap-1.5 sm:text-xs"
+            class="mt-auto flex w-full flex-col items-center gap-0.5 pt-2 text-gray-600 sm:flex-row sm:items-center sm:justify-start sm:gap-1.5 sm:pt-3 sm:text-xs"
           >
             <Globe v-bind="iconProps" />
             <span class="text-[9px] text-teal-800 sm:text-xs">Visited</span>
@@ -82,16 +82,16 @@ const iconProps = {
         </div>
 
         <div
-          class="flex min-w-0 flex-col items-center rounded-xl bg-white px-1.5 py-3 text-center shadow-sm ring-1 ring-teal-800/15 sm:items-start sm:px-4 sm:py-4 sm:text-left"
+          class="flex h-full min-h-0 min-w-0 flex-col items-center rounded-xl bg-white px-1.5 py-3 text-center shadow-sm ring-1 ring-teal-800/15 sm:items-start sm:px-4 sm:py-4 sm:text-left"
         >
-          <p class="text-[9px] font-semibold uppercase leading-tight tracking-wide text-teal-800 sm:text-xs">
+          <p class="shrink-0 text-[9px] font-semibold uppercase leading-tight tracking-wide text-teal-800 sm:text-xs">
             Trips
           </p>
-          <p class="mt-1.5 text-lg font-bold tabular-nums text-teal-950 sm:mt-2 sm:text-2xl">
+          <p class="mt-1.5 shrink-0 text-lg font-bold tabular-nums text-teal-950 sm:mt-2 sm:text-2xl">
             {{ profile.stats.trips }}
           </p>
           <div
-            class="mt-2 flex flex-col items-center gap-0.5 text-gray-600 sm:mt-3 sm:flex-row sm:items-center sm:gap-1.5 sm:text-xs"
+            class="mt-auto flex w-full flex-col items-center gap-0.5 pt-2 text-gray-600 sm:flex-row sm:items-center sm:justify-start sm:gap-1.5 sm:pt-3 sm:text-xs"
           >
             <Route v-bind="iconProps" />
             <span class="text-[9px] text-teal-800 sm:text-xs">Journeys</span>
@@ -99,18 +99,18 @@ const iconProps = {
         </div>
 
         <div
-          class="flex min-w-0 flex-col items-center rounded-xl bg-white px-1.5 py-3 text-center shadow-sm ring-1 ring-teal-800/15 sm:items-start sm:px-4 sm:py-4 sm:text-left"
+          class="flex h-full min-h-0 min-w-0 flex-col items-center rounded-xl bg-white px-1.5 py-3 text-center shadow-sm ring-1 ring-teal-800/15 sm:items-start sm:px-4 sm:py-4 sm:text-left"
         >
           <p
-            class="text-[9px] font-semibold uppercase leading-tight tracking-wide text-teal-800 sm:text-xs"
+            class="shrink-0 text-[9px] font-semibold uppercase leading-tight tracking-wide text-teal-800 sm:text-xs"
           >
             Memories
           </p>
-          <p class="mt-1.5 text-lg font-bold tabular-nums text-teal-950 sm:mt-2 sm:text-2xl">
+          <p class="mt-1.5 shrink-0 text-lg font-bold tabular-nums text-teal-950 sm:mt-2 sm:text-2xl">
             {{ profile.stats.memories }}
           </p>
           <div
-            class="mt-2 flex flex-col items-center gap-0.5 text-gray-600 sm:mt-3 sm:flex-row sm:items-center sm:gap-1.5 sm:text-xs"
+            class="mt-auto flex w-full flex-col items-center gap-0.5 pt-2 text-gray-600 sm:flex-row sm:items-center sm:justify-start sm:gap-1.5 sm:pt-3 sm:text-xs"
           >
             <Camera v-bind="iconProps" />
             <span class="text-[9px] text-teal-800 sm:text-xs">Photos</span>
@@ -118,18 +118,18 @@ const iconProps = {
         </div>
 
         <div
-          class="flex min-w-0 flex-col items-center rounded-xl bg-white px-1.5 py-3 text-center shadow-sm ring-1 ring-teal-800/15 sm:items-start sm:px-4 sm:py-4 sm:text-left"
+          class="flex h-full min-h-0 min-w-0 flex-col items-center rounded-xl bg-white px-1.5 py-3 text-center shadow-sm ring-1 ring-teal-800/15 sm:items-start sm:px-4 sm:py-4 sm:text-left"
         >
-          <p class="text-[9px] font-semibold uppercase leading-tight tracking-wide text-teal-800 sm:text-xs">
+          <p class="shrink-0 text-[9px] font-semibold uppercase leading-tight tracking-wide text-teal-800 sm:text-xs">
             Last
           </p>
           <p
-            class="mt-1.5 line-clamp-2 text-[11px] font-bold leading-tight text-teal-950 sm:mt-2 sm:text-xl sm:leading-snug"
+            class="mt-1.5 line-clamp-2 shrink-0 text-[11px] font-bold leading-tight text-teal-950 sm:mt-2 sm:text-xl sm:leading-snug"
           >
             {{ lastTrip.headline }}
           </p>
           <div
-            class="mt-2 flex min-w-0 flex-col items-center gap-0.5 text-gray-600 sm:mt-3 sm:flex-row sm:items-center sm:gap-1.5 sm:text-xs"
+            class="mt-auto flex min-w-0 w-full flex-col items-center gap-0.5 pt-2 text-gray-600 sm:flex-row sm:items-center sm:justify-start sm:gap-1.5 sm:pt-3 sm:text-xs"
           >
             <MapPin v-bind="iconProps" />
             <span class="line-clamp-2 max-w-full text-[9px] text-teal-800 sm:truncate sm:text-xs">{{
