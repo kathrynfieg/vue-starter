@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { Plus } from 'lucide-vue-next'
 import type { Trip, UserProfile } from '@/types/journal'
 import ProfileHeader from '@/components/ProfileHeader.vue'
+import NavBar from '@/components/NavBar.vue'
 import TripSection from '@/components/journal/TripSection.vue'
 
 const mockUserProfile: UserProfile = {
@@ -327,6 +328,8 @@ function onAddTrip() {
 
 <template>
   <div class="min-h-screen bg-slate-100 text-slate-900 antialiased">
+    <NavBar @add-trip="onAddTrip" />
+
     <div
       class="mx-auto max-w-xl px-5 pb-16 pt-10 sm:max-w-2xl sm:px-8 lg:max-w-6xl xl:max-w-7xl"
     >
@@ -334,13 +337,14 @@ function onAddTrip() {
         class="flex flex-col lg:grid lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:items-start lg:gap-8 xl:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] xl:gap-12"
       >
         <aside
-          class="lg:sticky lg:top-8 lg:self-start lg:border-r lg:border-gray-200 lg:pr-8 xl:pr-10"
+          id="profile"
+          class="lg:sticky lg:top-20 lg:self-start lg:border-r lg:border-gray-200 lg:pr-8 xl:pr-10"
         >
           <ProfileHeader :profile="mockUserProfile" :last-trip="lastTripCard" />
         </aside>
 
         <!-- Feed -->
-        <main class="mt-10 min-w-0 space-y-6 lg:mt-0 lg:space-y-8">
+        <main id="journal" class="mt-10 min-w-0 space-y-6 lg:mt-0 lg:space-y-8">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <p class="text-xs font-medium uppercase tracking-wide text-stone-500">Journal</p>
             <button
