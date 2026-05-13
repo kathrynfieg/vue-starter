@@ -26,7 +26,7 @@ defineEmits<{
       </a>
 
       <nav class="flex items-center gap-1 sm:gap-2" aria-label="Primary">
-        <a
+        <!-- <a
           href="#journal"
           class="rounded-md px-2.5 py-2 text-sm text-stone-300 transition hover:bg-stone-800 hover:text-amber-100 sm:px-3"
         >
@@ -37,15 +37,15 @@ defineEmits<{
           class="hidden rounded-md px-2.5 py-2 text-sm text-stone-300 transition hover:bg-stone-800 hover:text-amber-100 sm:inline sm:px-3"
         >
           Profile
-        </a>
-        <button
+        </a> -->
+        <!-- <button
           type="button"
           class="ml-1 inline-flex items-center gap-1.5 rounded-lg bg-amber-200/90 px-2.5 py-1.5 text-xs font-semibold text-stone-900 shadow-sm transition hover:bg-amber-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-200 sm:ml-2 sm:px-3 sm:text-sm"
           @click="$emit('addTrip')"
         >
           <Plus class="size-3.5 shrink-0 sm:size-4" :stroke-width="2" aria-hidden="true" />
           Add trip
-        </button>
+        </button> -->
       </nav>
     </div>
   </header>
