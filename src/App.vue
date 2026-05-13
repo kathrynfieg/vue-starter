@@ -200,6 +200,107 @@ const mockTrips: Trip[] = [
       },
     ],
   },
+  {
+    id: 't6',
+    title: 'Tokyo City Nights',
+    caption: 'Neon lights, late trains, and way too much convenience store food',
+    start_date: '2026-03-11',
+    end_date: '2026-03-16',
+    location_text: 'Tokyo, Japan',
+    cover_image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26',
+    memories: [
+      {
+        id: 'm17',
+        type: 'photo',
+        photo_url: 'https://images.unsplash.com/photo-1505253213348-cd54c92b37c9',
+        caption: 'Shibuya crossing at night',
+        location_text: 'Shibuya',
+        created_at: '2026-03-12',
+      },
+      {
+        id: 'm18',
+        type: 'photo',
+        photo_url: 'https://images.unsplash.com/photo-1526481280695-3c687fd5432c',
+        caption: 'Quiet temple escape in the middle of chaos',
+        location_text: 'Asakusa',
+        created_at: '2026-03-13',
+      },
+      {
+        id: 'm19',
+        type: 'photo',
+        photo_url: 'https://images.unsplash.com/photo-1549692520-acc6669e2f0c',
+        caption: 'First ramen that changed everything',
+        location_text: 'Shinjuku',
+        created_at: '2026-03-14',
+      },
+    ],
+  },
+
+  {
+    id: 't7',
+    title: 'A Slow Week at Home',
+    caption: 'No flights, no plans — just resetting life for a bit',
+    start_date: '2026-02-01',
+    end_date: '2026-02-07',
+    location_text: 'Adelaide, Australia',
+    cover_image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee',
+    memories: [
+      {
+        id: 'm20',
+        type: 'text',
+        text: 'I didn’t realise how much I needed a week with no plans. Just mornings with coffee and evenings where nothing is scheduled.',
+        created_at: '2026-02-02',
+      },
+      {
+        id: 'm21',
+        type: 'text',
+        text: 'Went for walks without my phone. It felt weird at first, then really nice.',
+        created_at: '2026-02-03',
+      },
+      {
+        id: 'm22',
+        type: 'text',
+        text: 'Sometimes the best trips are the ones where you don’t go anywhere.',
+        created_at: '2026-02-05',
+      },
+    ],
+  },
+
+  {
+    id: 't8',
+    title: 'Coastal Photo Days',
+    caption: 'Just chasing light along the coast for a few days',
+    start_date: '2025-12-18',
+    end_date: '2025-12-20',
+    location_text: 'South Australia',
+    cover_image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e',
+    memories: [
+      {
+        id: 'm23',
+        type: 'photo',
+        photo_url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470',
+        caption: 'Early morning light on empty beaches',
+        location_text: 'Yorke Peninsula',
+        created_at: '2025-12-18',
+      },
+      {
+        id: 'm24',
+        type: 'photo',
+        photo_url: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429',
+        caption: 'Windy cliffs and salty air',
+        location_text: 'Clifftop trail',
+        created_at: '2025-12-19',
+      },
+      {
+        id: 'm25',
+        type: 'photo',
+        photo_url: 'https://images.unsplash.com/photo-1470770903676-69b98201ea1c',
+        caption: 'Last sunset before heading home',
+        location_text: 'Moana Beach',
+        created_at: '2025-12-20',
+      },
+    ],
+  },
 ]
 
 const lastTripCard = computed(() => {
