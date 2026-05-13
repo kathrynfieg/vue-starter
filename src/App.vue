@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { Plus } from 'lucide-vue-next'
 import type { Trip, UserProfile } from '@/types/journal'
 import ProfileHeader from '@/components/ProfileHeader.vue'
 import TripSection from '@/components/journal/TripSection.vue'
@@ -318,6 +319,10 @@ const lastTripCard = computed(() => {
   }
   return { headline: trip.title, place: trip.location_text }
 })
+
+function onAddTrip() {
+  console.log('[journal] Add trip clicked (UI only — not implemented)')
+}
 </script>
 
 <template>
@@ -336,7 +341,17 @@ const lastTripCard = computed(() => {
 
         <!-- Feed -->
         <main class="mt-10 min-w-0 space-y-6 lg:mt-0 lg:space-y-8">
-          <p class="text-xs font-medium uppercase tracking-wide text-stone-500">Journal</p>
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <p class="text-xs font-medium uppercase tracking-wide text-stone-500">Journal</p>
+            <button
+              type="button"
+              class="inline-flex items-center gap-1.5 rounded-lg bg-teal-800 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-teal-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-800"
+              @click="onAddTrip"
+            >
+              <Plus class="size-3.5 shrink-0" :stroke-width="2.5" aria-hidden="true" />
+              Add trip
+            </button>
+          </div>
 
           <TripSection v-for="trip in mockTrips" :key="trip.id" :trip="trip" />
         </main>
